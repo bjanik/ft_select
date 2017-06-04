@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/05/30 16:16:00 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/04 17:26:10 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_arg	*add_arg(char *arg_name)
 	new->arg_name = ft_strdup(arg_name);
 	new->selected = 0;
 	new->current = 0;
-	new->index = 0;
 	new->top = 0;
 	new->bottom = 0;
 	new->next = NULL;
@@ -39,9 +38,12 @@ void	push_back(t_arg **head, char *arg_name)
 		while (ptr->next)
 			ptr = ptr->next;
 		ptr->next = add_arg(arg_name);
+		ptr->next->prev = ptr;
 	}
 	else
 		*head = add_arg(arg_name);
+	if (!(*head)->next && !(*head)->prev)
+		(*head)->current = 1;
 }
 
 int	list_len(t_arg *head)
@@ -59,15 +61,15 @@ int	list_len(t_arg *head)
 
 int	get_max_arg_len(t_arg *head)
 {
-	int	max_len;
-	int	len;
+	size_t	max_len;
+	size_t	len;
 
 	max_len = 1;
 	len = 0;
 	while (head)
 	{
-		if ((len = ft_strlen(head->arg_name)) > max_len)
-			max_len = len;
+		if (ft_strlen(head->arg_name) > max_len)
+			max_len = ft_strlen(head->arg_name);
 		head = head->next;
 	}
 	return (max_len);
