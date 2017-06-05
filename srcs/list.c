@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/04 17:26:10 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/05 19:04:04 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_arg	*add_arg(char *arg_name)
 	new->arg_name = ft_strdup(arg_name);
 	new->selected = 0;
 	new->current = 0;
-	new->top = 0;
-	new->bottom = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -46,7 +44,7 @@ void	push_back(t_arg **head, char *arg_name)
 		(*head)->current = 1;
 }
 
-int	list_len(t_arg *head)
+int		list_len(t_arg *head)
 {
 	int	len;
 
@@ -59,7 +57,7 @@ int	list_len(t_arg *head)
 	return (len);
 }
 
-int	get_max_arg_len(t_arg *head)
+int		get_max_arg_len(t_arg *head)
 {
 	size_t	max_len;
 	size_t	len;
@@ -68,8 +66,8 @@ int	get_max_arg_len(t_arg *head)
 	len = 0;
 	while (head)
 	{
-		if (ft_strlen(head->arg_name) > max_len)
-			max_len = ft_strlen(head->arg_name);
+		if ((len = ft_strlen(head->arg_name)) > max_len)
+			max_len = len;
 		head = head->next;
 	}
 	return (max_len);
@@ -88,4 +86,3 @@ t_arg	*get_current_arg(t_arg *head)
 	}
 	return (NULL);
 }
-

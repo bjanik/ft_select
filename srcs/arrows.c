@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 13:30:24 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/04 18:18:03 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/05 17:37:34 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	arrow_down(t_arg *head)
 	else
 		arg = arg->next;
 	arg->current = 1;
-	display_args(head);
 }
 
 void	arrow_up(t_arg *head)
@@ -34,14 +33,12 @@ void	arrow_up(t_arg *head)
 	arg->current = 0;
 	if (!arg->prev)
 	{
-		while (head->next)
-			head = head->next;
-		arg = head;
+		while (arg->next)
+			arg = arg->next;
 	}
 	else
 		arg = arg->prev;
 	arg->current = 1;
-	display_args(head);
 }
 
 void	arrow_right(t_arg *head)
@@ -52,7 +49,7 @@ void	arrow_right(t_arg *head)
 	cpt = 0;
 	arg = get_current_arg(head);
 	arg->current = 0;
-	while (cpt < g_term->nb_text_line)
+	while (cpt < g_select->nb_text_line)
 	{
 		cpt++;
 		arg = arg->next;
@@ -60,7 +57,6 @@ void	arrow_right(t_arg *head)
 			arg = head;
 	}
 	arg->current = 1;
-	display_args(head);
 }
 
 void	arrow_left(t_arg *head)
@@ -71,13 +67,12 @@ void	arrow_left(t_arg *head)
 	cpt = 0;
 	arg = get_current_arg(head);
 	arg->current = 0;
-	while (cpt < g_term->nb_text_line && arg->prev)
+	while (cpt < g_select->nb_text_line && arg->prev)
 	{
 		cpt++;
 		arg = arg->prev;
 	}
 	arg->current = 1;
-	display_args(head);
 }
 
 void	select_arg(t_arg *head)
@@ -89,5 +84,9 @@ void	select_arg(t_arg *head)
 		arg->selected = 0;
 	else
 		arg->selected = 1;
-	display_args(head);
+	arg->current = 0;
+	if (arg->next)
+		arg->next->current = 1;
+	else
+		head->current = 1;
 }

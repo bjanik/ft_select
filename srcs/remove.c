@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 15:01:28 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/04 18:43:20 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/05 17:16:07 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static void	ft_free_item(t_arg *arg)
 	ft_strdel(&arg->arg_name);
 	arg->prev = NULL;
 	arg->next = NULL;
-	ft_memdel((void**)arg);
+	ft_memdel((void**)&arg);
 }
 
-void	remove_item(t_arg **head)
+void		remove_item(t_arg **head)
 {
 	t_arg	*ptr;
 
@@ -36,16 +36,17 @@ void	remove_item(t_arg **head)
 	}
 	if (ptr == *head)
 	{
-		*head = (*head)->next;
+		*head = ptr->next;
+		(*head)->prev = NULL;
 		ft_free_item(ptr);
 	}
 	else
 	{
 		ptr->prev->next = ptr->next;
-		ptr->next->prev = ptr->prev;
+		if (ptr->next)
+			ptr->next->prev = ptr->prev;
 		ft_free_item(ptr);
 	}
-	tputs(tgetstr("cl", NULL), 1, my_putchar);
-	g_term->max_arg_len = get_max_arg_len(*head);
+	g_select->max_arg_len = get_max_arg_len(*head);
 	display_args(*head);
 }

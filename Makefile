@@ -6,7 +6,7 @@
 #    By: bjanik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/12 10:30:25 by bjanik            #+#    #+#              #
-#    Updated: 2017/06/04 18:19:20 by bjanik           ###   ########.fr        #
+#    Updated: 2017/06/05 13:17:28 by bjanik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC_NAME = keys.c \
 	   remove.c \
 	   exit_select.c \
 	   display.c \
+	   signals.c \
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
