@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 15:30:09 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 16:04:37 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		check_term(void)
 		exit(-1);
 	if (!(termtype = getenv("TERM")))
 		ft_error_msg("Missing $TERM variable");
-	if (tgetent(NULL, termtype))
+	if (!tgetent(NULL, termtype))
 		exit(-1);
 	if (tcgetattr(STDIN, &term) == -1)
 		exit(-1);
