@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 15:01:28 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 14:55:48 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 18:50:54 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ void		remove_item(t_arg **head)
 {
 	t_arg	*ptr;
 
-	ptr = get_current_arg(*head);
-	if (!ptr->next && !ptr->prev)
-	{
-		ft_free_item(ptr);
+	if (!*head)
 		exit_select_escape();
-	}
+	ptr = get_current_arg(*head);
 	if (ptr == *head)
 	{
 		*head = ptr->next;
-		(*head)->prev = NULL;
+		if (*head)
+			(*head)->prev = NULL;
 		ft_free_item(ptr);
 	}
 	else
@@ -48,5 +46,4 @@ void		remove_item(t_arg **head)
 		ft_free_item(ptr);
 	}
 	g_select->max_arg_len = get_max_arg_len(*head);
-	display_args(*head);
 }

@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 17:58:05 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 15:03:44 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 17:59:54 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <termcap.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <stdio.h>
 # include <sys/stat.h>
+# include <sys/ttydefaults.h>
 
 # define MAX_KEY_LENGHT 5
 

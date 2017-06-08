@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 13:30:24 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 14:11:00 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 18:30:18 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,35 @@ void	arrow_down(t_arg *head)
 {
 	t_arg	*arg;
 
-	arg = get_current_arg(head);
-	arg->current = 0;
-	if (!arg->next)
-		arg = head;
-	else
-		arg = arg->next;
-	arg->current = 1;
+	if (head)
+	{
+		arg = get_current_arg(head);
+		arg->current = 0;
+		if (!arg->next)
+			arg = head;
+		else
+			arg = arg->next;
+		arg->current = 1;
+	}
 }
 
 void	arrow_up(t_arg *head)
 {
 	t_arg	*arg;
 
-	arg = get_current_arg(head);
-	arg->current = 0;
-	if (!arg->prev)
+	if (head)
 	{
-		while (arg->next)
-			arg = arg->next;
+		arg = get_current_arg(head);
+		arg->current = 0;
+		if (!arg->prev)
+		{
+			while (arg->next)
+				arg = arg->next;
+		}
+		else
+			arg = arg->prev;
+		arg->current = 1;
 	}
-	else
-		arg = arg->prev;
-	arg->current = 1;
 }
 
 void	arrow_right(t_arg *head)
@@ -47,16 +53,19 @@ void	arrow_right(t_arg *head)
 	t_arg	*arg;
 
 	cpt = 0;
-	arg = get_current_arg(head);
-	arg->current = 0;
-	while (cpt < g_select->nb_text_line)
+	if (head)
 	{
-		cpt++;
-		arg = arg->next;
-		if (!arg)
-			arg = head;
+		arg = get_current_arg(head);
+		arg->current = 0;
+		while (cpt < g_select->nb_text_line)
+		{
+			cpt++;
+			arg = arg->next;
+			if (!arg)
+				arg = head;
+		}
+		arg->current = 1;
 	}
-	arg->current = 1;
 }
 
 void	arrow_left(t_arg *head)
@@ -65,14 +74,17 @@ void	arrow_left(t_arg *head)
 	t_arg	*arg;
 
 	cpt = 0;
-	arg = get_current_arg(head);
-	arg->current = 0;
-	while (cpt < g_select->nb_text_line && arg->prev)
+	if (head)
 	{
-		cpt++;
-		arg = arg->prev;
+		arg = get_current_arg(head);
+		arg->current = 0;
+		while (cpt < g_select->nb_text_line && arg->prev)
+		{
+			cpt++;
+			arg = arg->prev;
+		}
+		arg->current = 1;
 	}
-	arg->current = 1;
 }
 
 void	select_arg(t_arg *head)
