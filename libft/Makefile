@@ -6,7 +6,7 @@
 #    By: bjanik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 16:52:33 by bjanik            #+#    #+#              #
-#    Updated: 2017/05/22 17:40:48 by bjanik           ###   ########.fr        #
+#    Updated: 2017/06/07 15:08:00 by bjanik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,7 @@ SRCS = ft_putstr.c \
 	   print.c \
 	   print_wchar.c \
 	   ft_valid_file.c \
+	   ft_error_msg.c \
 
 OBJ = $(SRCS:.c=.o)
 RM = rm -f

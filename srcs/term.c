@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/05 19:11:34 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 15:30:09 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,10 @@ void	get_win_size(void)
 	g_select->nb_line = w.ws_row;
 }
 
-void	init_term(void)
+void	init_select(void)
 {
-	int	i;
-
-	i = 1;
 	if (!(g_select = (t_term*)malloc(sizeof(t_term))))
-	{
-		ft_putendl_fd("Malloc failed", 2);
-		exit(-1);
-	}
+		ft_error_msg("Malloc failed");
 	g_select->nb_col = 0;
 	g_select->nb_line = 0;
 	g_select->nb_text_col = 0;
@@ -49,14 +43,10 @@ void	reinit_term(void)
 	term.c_lflag |= ECHO;
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	tputs(tgetstr("cl", NULL), 1, my_putchar);
 	tputs(tgetstr("te", NULL), 1, my_putchar);
 	tputs(tgetstr("ve", NULL), 1, my_putchar);
 	if (tcsetattr(STDIN, TCSANOW, &term) == -1)
-	{
-		ft_putendl_fd("Unable to set terminal", 2);
-		exit(-1);
-	}
+		ft_error_msg("Unable to reset terminal");
 }
 
 int		check_term(void)
@@ -64,31 +54,22 @@ int		check_term(void)
 	char			*termtype;
 	struct termios	term;
 
-	if (!isatty(STDIN))
+	if (!isatty(STDIN) || !ttyname(STDIN))
 		exit(-1);
-	if (!ttyname(STDIN))
+	if (!(termtype = getenv("TERM")))
+		ft_error_msg("Missing $TERM variable");
+	if (tgetent(NULL, termtype))
 		exit(-1);
-	if ((termtype = getenv("TERM")) == NULL)
-	{
-		ft_putendl_fd("Missing term variable", 2);
-		exit(-1);
-	}
-	tgetent(NULL, termtype);
 	if (tcgetattr(STDIN, &term) == -1)
 		exit(-1);
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	tputs(tgetstr("cl", NULL), 1, my_putchar);
 	tputs(tgetstr("ti", NULL), 1, my_putchar);
 	tputs(tgoto(tgetstr("cm", NULL), 0, 0), 1, my_putchar);
 	tputs(tgetstr("vi", NULL), 1, my_putchar);
 	if (tcsetattr(STDIN, TCSANOW, &term) == -1)
-	{
-		ft_putendl_fd("Unable to set terminal", 2);
-		exit(-1);
-	}
-	init_term();
+		ft_error_msg("Unable to set terminal");
 	return (0);
 }
 
@@ -103,9 +84,8 @@ int		get_col_line(void)
 		return (-1);
 	else
 	{
-		while (g_select->nb_col / cpt > g_select->max_arg_len + 1)
-			cpt++;
-		if (g_select->max_arg_len + 1 > g_select->nb_col / cpt)
+		cpt = g_select->nb_col / (g_select->max_arg_len + 1);
+		if (!cpt || (g_select->max_arg_len + 1 > g_select->nb_col / cpt))
 			return (-1);
 		g_select->nb_text_col = cpt;
 		g_select->nb_text_line = nb_arg / cpt;
@@ -113,6 +93,7 @@ int		get_col_line(void)
 			g_select->nb_text_line++;
 		if (g_select->nb_text_line > g_select->nb_line)
 			return (-1);
+		g_select->nb_arg_last_col = nb_arg % g_select->nb_text_line;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/05 19:04:04 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 15:17:27 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_arg	*add_arg(char *arg_name)
 	t_arg	*new;
 
 	if (!(new = (t_arg*)malloc(sizeof(t_arg))))
-		exit(-1);
+		ft_error_msg("Malloc failed");
 	new->arg_name = ft_strdup(arg_name);
 	new->selected = 0;
 	new->current = 0;
@@ -39,9 +39,10 @@ void	push_back(t_arg **head, char *arg_name)
 		ptr->next->prev = ptr;
 	}
 	else
+	{
 		*head = add_arg(arg_name);
-	if (!(*head)->next && !(*head)->prev)
 		(*head)->current = 1;
+	}
 }
 
 int		list_len(t_arg *head)

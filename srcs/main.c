@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/05 19:11:21 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 15:01:09 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,19 @@ int			main(int argc, char **argv)
 	char	buff[MAX_KEY_LENGHT + 1];
 
 	if (argc == 1)
-	{
-		ft_putendl_fd("Set at least one argument", 2);
-		return (0);
-	}
+		ft_error_msg("Set at least one argument");
 	handle_signals();
-	check_term();
+	init_select();
 	create_arg_list(argv);
-	get_win_size();
-	if (!get_col_line())
-		display_args(g_select->head);
-	else
-	{
-		tputs(tgoto(tgetstr("cm", NULL), 0, 0), 1, my_putchar);
-		ft_putstr_fd("Window is too small", STDIN);
-	}
+	check_term();
+	calcul_display();
 	while (42)
 	{
 		ft_bzero(buff, MAX_KEY_LENGHT);
 		if (read(STDIN, buff, MAX_KEY_LENGHT) < 1)
 		{
-			ft_putendl_fd("Reading standard input failed", 2);
-			exit(-1);
+			reinit_term();
+			ft_error_msg("Reading standard input failed");
 		}
 		get_key(buff);
 		display_args(g_select->head);

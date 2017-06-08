@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 17:58:05 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/05 19:10:37 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 15:03:44 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,16 @@
 # include <termcap.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 
-# define LEFT_ARROW "\027[D"
-# define RIGHT_ARROW "\027[C"
-# define UP_ARROW "\027[A"
-# define DOWN_ARROW "\027[B"
 # define MAX_KEY_LENGHT 5
-# define STDIN 0
 
 typedef struct		s_arg
 {
 	char			*arg_name;
-	int				len_arg;
 	int				selected;
 	int				current;
+	int				index;
 	struct s_arg	*next;
 	struct s_arg	*prev;
 }					t_arg;
@@ -43,19 +39,19 @@ typedef struct		s_term
 	int				nb_text_col;
 	int				nb_text_line;
 	int				max_arg_len;
-	int				current_col;
-	int				current_line;
+	int				nb_arg_last_col;
 	t_arg			*head;
 }					t_term;
 
 t_arg				*add_arg(char *arg_name);
 void				push_back(t_arg **head, char *arg_name);
 t_arg				*get_current_arg(t_arg *head);
-void				init_term(void);
+void				init_select(void);
 void				reinit_term(void);
 int					check_term(void);
 int					list_len(t_arg *head);
 int					get_max_arg_len(t_arg *head);
+void				calcul_display(void);
 int					get_col_line(void);
 void				get_win_size();
 void				display_args(t_arg *head);

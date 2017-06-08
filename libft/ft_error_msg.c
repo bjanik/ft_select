@@ -1,40 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_select.c                                      :+:      :+:    :+:   */
+/*   ft_error_msg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/04 14:24:22 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/07 13:05:29 by bjanik           ###   ########.fr       */
+/*   Created: 2017/06/07 15:05:21 by bjanik            #+#    #+#             */
+/*   Updated: 2017/06/07 15:58:32 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-void	exit_select_escape(void)
+void	ft_error_msg(char *error)
 {
-	reinit_term();
-	exit(1);
-}
-
-void	exit_select_return(t_arg *head)
-{
-	t_arg	*ptr;
-	int		first;
-
-	ptr = head;
-	first = 0;
-	reinit_term();
-	while (ptr)
-	{
-		if (ptr->selected)
-		{
-			ft_printf("%.*s%s", first, " ", ptr->arg_name);
-			if (!first)
-				first = 1;
-		}
-		ptr = ptr->next;
-	}
-	exit(1);
+	ft_putendl_fd(error, STDERR);
+	exit(-1);
 }
