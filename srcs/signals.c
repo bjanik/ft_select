@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 12:58:18 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 18:50:39 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/09 17:48:14 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 static void	simulate_susp(void)
 {
-	struct termios	term;
-	char			cp[2];
+	char	cp[2];
 
-	cp[0] = term.c_cc[VSUSP];
+	cp[0] = '\x1A';
 	cp[1] = '\0';
 	ioctl(STDIN, TIOCSTI, cp);
 }
@@ -40,32 +39,18 @@ static void	handler(int signum)
 	else
 	{
 		reinit_term();
-		exit(signum);
+		exit(0);
 	}
 }
 
 void		handle_signals(void)
 {
-	signal(SIGWINCH, handler);
-	signal(SIGINT, handler);
-	signal(SIGQUIT, handler);
-	signal(SIGTSTP, handler);
-	signal(SIGCONT, handler);
-	signal(SIGHUP, handler);
-	signal(SIGILL, handler);
-	signal(SIGKILL, handler);
-	signal(SIGTRAP, handler);
-	signal(SIGABRT, handler);
-	signal(SIGFPE, handler);
-	signal(SIGBUS, handler);
-	signal(SIGSEGV, handler);
-	signal(SIGSYS, handler);
-	signal(SIGPIPE, handler);
-	signal(SIGALRM, handler);
-	signal(SIGTERM, handler);
-	signal(SIGURG, handler);
-	signal(SIGCHLD, handler);
-	signal(SIGTTIN, handler);
-	signal(SIGTTOU, handler);
-	signal(SIGXCPU, handler);
+	int	signum;
+
+	signum = 1;
+	while (signum < 32)
+	{
+		signal(signum, handler);
+		signum++;
+	}
 }

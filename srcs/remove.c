@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 15:01:28 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 18:50:54 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/08 18:56:14 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_free_item(t_arg *arg)
 void		remove_item(t_arg **head)
 {
 	t_arg	*ptr;
-
+	
 	if (!*head)
 		exit_select_escape();
 	ptr = get_current_arg(*head);

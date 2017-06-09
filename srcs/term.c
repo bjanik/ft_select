@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 18:02:27 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/09 18:25:48 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_win_size(void)
 	struct winsize	w;
 
 	if (ioctl(STDIN, TIOCGWINSZ, &w))
-		exit(-1);
+		ft_error_msg("ioctl failed");
 	g_select->nb_col = w.ws_col;
 	g_select->nb_line = w.ws_row;
 }
@@ -54,7 +54,7 @@ int		check_term(void)
 	char			*termtype;
 	struct termios	term;
 
-	if (!isatty(STDIN) || !ttyname(STDIN))
+	if (!isatty(STDIN))
 		exit(-1);
 	if (!(termtype = getenv("TERM")))
 		ft_error_msg("Missing $TERM variable");
@@ -93,7 +93,6 @@ int		get_col_line(void)
 			g_select->nb_text_line++;
 		if (g_select->nb_text_line > g_select->nb_line)
 			return (-1);
-		g_select->nb_arg_last_col = nb_arg % g_select->nb_text_line;
 	}
 	return (0);
 }

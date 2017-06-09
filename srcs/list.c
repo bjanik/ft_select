@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 15:17:27 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/09 13:13:08 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_arg	*add_arg(char *arg_name)
 
 	if (!(new = (t_arg*)malloc(sizeof(t_arg))))
 		ft_error_msg("Malloc failed");
-	new->arg_name = ft_strdup(arg_name);
+	if (!(new->arg_name = ft_strdup(arg_name)))
+		ft_error_msg("Malloc failed");
 	new->selected = 0;
 	new->current = 0;
 	new->next = NULL;

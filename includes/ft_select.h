@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 17:58:05 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 17:59:54 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/09 17:50:55 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <termcap.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/ttydefaults.h>
+# include <fcntl.h>
 
 # define MAX_KEY_LENGHT 5
 
@@ -41,7 +41,6 @@ typedef struct		s_term
 	int				nb_text_col;
 	int				nb_text_line;
 	int				max_arg_len;
-	int				nb_arg_last_col;
 	t_arg			*head;
 }					t_term;
 

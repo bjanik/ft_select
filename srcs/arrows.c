@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 13:30:24 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 18:30:18 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/09 13:04:05 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,17 @@ void	select_arg(t_arg *head)
 {
 	t_arg *arg;
 
-	arg = get_current_arg(head);
-	if (arg->selected)
-		arg->selected = 0;
-	else
-		arg->selected = 1;
-	arg->current = 0;
-	if (arg->next)
-		arg->next->current = 1;
-	else
-		head->current = 1;
+	if (head)
+	{
+		arg = get_current_arg(head);
+		if (arg->selected)
+			arg->selected = 0;
+		else
+			arg->selected = 1;
+		arg->current = 0;
+		if (arg->next)
+			arg->next->current = 1;
+		else
+			head->current = 1;
+	}
 }
