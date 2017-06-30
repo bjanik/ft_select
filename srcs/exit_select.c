@@ -6,19 +6,35 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 14:24:22 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/08 18:13:55 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/28 12:59:15 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	exit_select_escape(void)
+static void	free_data(void)
 {
-	reinit_term();
-	exit(1);
+	t_arg	*ptr;
+
+	ptr = g_select->head;
+	while (ptr)
+	{
+		g_select->head = g_select->head->next;
+		ft_strdel(&ptr->arg_name);
+		ft_memdel((void**)&ptr);
+		ptr = g_select->head;
+	}
+	ft_memdel((void**)&g_select);
 }
 
-void	exit_select_return(t_arg *head)
+void		exit_select_escape(void)
+{
+	reinit_term();
+	free_data();
+	exit(0);
+}
+
+void		exit_select_return(t_arg *head)
 {
 	t_arg	*ptr;
 	int		first;
@@ -36,5 +52,6 @@ void	exit_select_return(t_arg *head)
 		}
 		ptr = ptr->next;
 	}
-	exit(1);
+	free_data();
+	exit(0);
 }

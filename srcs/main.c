@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/09 15:38:45 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/28 15:24:56 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ static void	create_arg_list(char **argv)
 	g_select->max_arg_len = get_max_arg_len(g_select->head);
 }
 
+static void	termcap_is_available(void)
+{
+	if (!tgetstr("cl", NULL))
+		ft_error_msg("Termcap unavailable : cl");
+	if (!tgetstr("us", NULL))
+		ft_error_msg("Termcap unavailable : us");
+	if (!tgetstr("mr", NULL))
+		ft_error_msg("Termcap unavailable : mr");
+	if (!tgetstr("me", NULL))
+		ft_error_msg("Termcap unavailable : me");
+	if (!tgetstr("cm", NULL))
+		ft_error_msg("Termcap unavailable : cm");
+	if (!tgetstr("ti", NULL))
+		ft_error_msg("Termcap unavailable : ti");
+	if (!tgetstr("te", NULL))
+		ft_error_msg("Termcap unavailable : te");
+	if (!tgetstr("vi", NULL))
+		ft_error_msg("Termcap unavailable : vi");
+	if (!tgetstr("ve", NULL))
+		ft_error_msg("Termcap unavailable : ve");
+}
+
 int			main(int argc, char **argv)
 {
 	char	buff[MAX_KEY_LENGHT + 1];
@@ -37,6 +59,7 @@ int			main(int argc, char **argv)
 	init_select();
 	create_arg_list(argv);
 	check_term();
+	termcap_is_available();
 	calcul_display();
 	while (42)
 	{
@@ -47,7 +70,7 @@ int			main(int argc, char **argv)
 			ft_error_msg("Reading standard input failed");
 		}
 		get_key(buff);
-		display_args(g_select->head);
+		calcul_display();
 	}
 	return (0);
 }

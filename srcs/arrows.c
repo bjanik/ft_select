@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 13:30:24 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/09 13:04:05 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/27 15:36:06 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,26 @@ void	arrow_right(t_arg *head)
 {
 	int		cpt;
 	t_arg	*arg;
+	t_arg	*current;
 
 	cpt = 0;
 	if (head)
 	{
 		arg = get_current_arg(head);
+		if (!arg->next)
+			return ;
+		current = arg;
 		arg->current = 0;
 		while (cpt < g_select->nb_text_line)
 		{
 			cpt++;
 			arg = arg->next;
 			if (!arg)
-				arg = head;
+			{
+				arg = current;
+				current->current = 1;
+				return ;
+			}
 		}
 		arg->current = 1;
 	}
@@ -72,16 +80,23 @@ void	arrow_left(t_arg *head)
 {
 	int		cpt;
 	t_arg	*arg;
+	t_arg	*current;
 
 	cpt = 0;
 	if (head)
 	{
 		arg = get_current_arg(head);
+		current = arg;
 		arg->current = 0;
-		while (cpt < g_select->nb_text_line && arg->prev)
+		while (cpt < g_select->nb_text_line)
 		{
 			cpt++;
 			arg = arg->prev;
+			if (!arg)
+			{
+				current->current = 1;
+				return ;
+			}
 		}
 		arg->current = 1;
 	}

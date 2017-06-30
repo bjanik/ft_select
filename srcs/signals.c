@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 12:58:18 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/09 17:48:14 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/28 14:17:24 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,19 @@ static void	handler(int signum)
 	else if (signum == SIGTSTP)
 	{
 		reinit_term();
-		signal(signum, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
 		simulate_susp();
 	}
 	else if (signum == SIGCONT)
 	{
 		check_term();
+		handle_signals();
 		calcul_display();
 	}
 	else
 	{
 		reinit_term();
-		exit(0);
+		exit(128 + signum);
 	}
 }
 

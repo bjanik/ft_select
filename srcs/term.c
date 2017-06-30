@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 18:27:32 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/09 18:25:48 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/28 15:47:36 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	get_win_size(void)
 	struct winsize	w;
 
 	if (ioctl(STDIN, TIOCGWINSZ, &w))
+	{
+		reinit_term();
 		ft_error_msg("ioctl failed");
+	}
 	g_select->nb_col = w.ws_col;
 	g_select->nb_line = w.ws_row;
 }
@@ -30,6 +33,7 @@ void	init_select(void)
 	g_select->nb_line = 0;
 	g_select->nb_text_col = 0;
 	g_select->nb_text_line = 0;
+	g_select->diff = 0;
 	g_select->head = NULL;
 }
 
@@ -41,11 +45,9 @@ void	reinit_term(void)
 		exit(-1);
 	term.c_lflag |= ICANON;
 	term.c_lflag |= ECHO;
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
 	tputs(tgetstr("te", NULL), 1, my_putchar);
 	tputs(tgetstr("ve", NULL), 1, my_putchar);
-	if (tcsetattr(STDIN, TCSANOW, &term) == -1)
+	if (tcsetattr(STDIN, TCSADRAIN, &term) == -1)
 		ft_error_msg("Unable to reset terminal");
 }
 
@@ -65,11 +67,11 @@ int		check_term(void)
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
+	if (tcsetattr(STDIN, TCSADRAIN, &term) == -1)
+		ft_error_msg("Unable to set terminal");
 	tputs(tgetstr("ti", NULL), 1, my_putchar);
 	tputs(tgoto(tgetstr("cm", NULL), 0, 0), 1, my_putchar);
 	tputs(tgetstr("vi", NULL), 1, my_putchar);
-	if (tcsetattr(STDIN, TCSANOW, &term) == -1)
-		ft_error_msg("Unable to set terminal");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bjanik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/03 16:01:59 by bjanik            #+#    #+#             */
-/*   Updated: 2017/06/09 12:21:16 by bjanik           ###   ########.fr       */
+/*   Updated: 2017/06/28 12:58:46 by bjanik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,27 @@ static void	end_key(t_arg *head)
 	}
 }
 
-void	get_key(char *buff)
+void		get_key(char *buff)
 {
-	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 65)
+	if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'A')
 		arrow_up(g_select->head);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 66)
+	else if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'B')
 		arrow_down(g_select->head);
-	/*else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
+	else if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'C')
 		arrow_right(g_select->head);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
-		arrow_left(g_select->head);*/
-	else if (buff[0] == 127 || (buff[0] == 27 && buff[1] == 91 &&
-				buff[2] == 51 && buff[3] == 126))
+	else if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'D')
+		arrow_left(g_select->head);
+	else if (buff[0] == DEL || (buff[0] == ESC && buff[1] == '[' &&
+				buff[2] == '3' && buff[3] == '~'))
 		remove_item(&g_select->head);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 72)
+	else if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'H')
 		home_key(g_select->head);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 70)
+	else if (buff[0] == ESC && buff[1] == '[' && buff[2] == 'F')
 		end_key(g_select->head);
-	else if (buff[0] == 32)
+	else if (buff[0] == ' ')
 		select_arg(g_select->head);
-	else if (buff[0] == 10)
+	else if (buff[0] == '\n')
 		exit_select_return(g_select->head);
-	else if (buff[0] == 27 && !buff[1])
+	else if (buff[0] == ESC && !buff[1])
 		exit_select_escape();
 }
