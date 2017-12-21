@@ -11,10 +11,12 @@ Small programm which takes argument and display them on the terminal using termc
 
 ### User can browse through by performing different actions :
 
-  Use arrows to navigate.
+        Use arrows to move through.
+        
+        Press space key to select/unselected an argument
   
-  Press space key to select/unselected an argument
+        Press delete to delete the argument on which the cursor points to.
   
-  Press delete to delete the argument on which the cursor points to.
+        Press escape to quit the programm.
   
-  Press escape to quit the programm.
+        Press "Enter" to display on Standard Output the list of selected arguments.
