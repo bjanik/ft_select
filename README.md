@@ -9,7 +9,7 @@ Grade: 106/100
 
 Small programm which takes argument and display them on the terminal using termcaps library.
 
-User can browse through by performing different actions :
+### User can browse through by performing different actions :
 
   Use arrows to navigate.
   
@@ -17,4 +17,4 @@ User can browse through by performing different actions :
   
   Press delete to delete the argument on which the cursor points to.
   
-  Press
+  Press escape to quit the programm.
