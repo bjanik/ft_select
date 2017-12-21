@@ -20,3 +20,8 @@ Small programm which takes argument and display them on the terminal using termc
         Press Escape to quit the programm.
   
         Press Enter to display on Standard Output the list of selected arguments.
+        
+Exemple of use of ft_select:
+
+ls `./ft_select *` will run ls command with all the arguments selected with ft_select
+
