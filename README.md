@@ -7,7 +7,7 @@ Grade: 106/100
 # Use 
 ./ft_select arg [arg2]...
 
-Small programm which takes argument and display them on the terminal using termcaps library.
+Small program which takes argument and display them on the terminal using termcaps library.
 
 ### User can browse through by performing different actions :
 
